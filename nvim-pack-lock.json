@@ -187,6 +187,10 @@
     "vscode.nvim": {
       "rev": "aa1102a7e15195c9cca22730b09224a7f7745ba8",
       "src": "https://github.com/mofiqul/vscode.nvim"
+    },
+    "zoxide.vim": {
+      "rev": "d4c3d088a70a4edae9def6209644c092f4221fe5",
+      "src": "https://github.com/nanotee/zoxide.vim"
     }
   }
 }
