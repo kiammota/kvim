@@ -7,3 +7,4 @@ vim.pack.add({
 })
 require("rose-pine").setup()
 vim.cmd("colorscheme rose-pine")
+
