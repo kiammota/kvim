@@ -1,31 +1,72 @@
 vim.opt.termguicolors = true
 
-vim.cmd('packadd! lualine.nvim')
-vim.cmd('packadd! nvim-web-devicons')
+-- Mude para false em máquinas sem Nerd Font
+local has_nerd_font = true
 
-require('lualine').setup({
+vim.pack.add({
+  "https://github.com/nvim-lualine/lualine.nvim",
+  "https://github.com/nvim-tree/nvim-web-devicons",
+})
+
+local ok, lualine = pcall(require, "lualine")
+if not ok then
+  return
+end
+
+local mode_map = {
+  ["NORMAL"]    = "N",
+  ["INSERT"]    = "I",
+  ["VISUAL"]    = "V",
+  ["V-LINE"]    = "VL",
+  ["V-BLOCK"]   = "VB",
+  ["REPLACE"]   = "R",
+  ["COMMAND"]   = "C",
+  ["TERMINAL"]  = "T",
+  ["SELECT"]    = "S",
+  ["O-PENDING"] = "O",
+}
+
+
+
+lualine.setup({
   options = {
-    theme = 'auto',
+    theme = "auto",
     globalstatus = true,
-    component_separators = { left = '', right = '' },
-    section_separators = { left = '', right = '' },
+    icons_enabled = has_nerd_font,
+    component_separators = { left = "", right = "" },
+    section_separators = { left = "", right = "" },
   },
   sections = {
     lualine_a = {
-      { 'mode', separator = { left = '', right = '' }, right_padding = 2 }
+      {
+        "mode",
+        fmt = function(str) return mode_map[str] or str:sub(1, 1) end,
+        separator = { left = round_l, right = round_r },
+        right_padding = 2,
+      },
     },
-    lualine_b = { 'branch', 'diff', 'diagnostics' },
+    lualine_b = { "branch", "diff", "diagnostics" },
     lualine_c = {
-      { 'filename', path = 1, symbols = { modified = ' ', readonly = ' ', unnamed = '[No Name]' } }
+      {
+        "filename",
+        path = 1,
+        symbols = { modified = "[+]", readonly = "[RO]", unnamed = "[No Name]" },
+      },
     },
     lualine_x = {
-      { 'encoding', cond = function() return vim.opt.fileencoding:get() ~= 'utf-8' end },
-      'fileformat',
-      'filetype'
+      {
+        "encoding",
+        cond = function() return vim.bo.fileencoding ~= "" and vim.bo.fileencoding ~= "utf-8" end,
+      },
+      "filetype",
     },
-    lualine_y = { 'progress' },
+    lualine_y = { "progress" },
     lualine_z = {
-      { 'location', separator = { left = '', right = '' }, left_padding = 2 }
-    }
-  }
+      {
+        "location",
+        separator = { left = round_l, right = round_r },
+        left_padding = 2,
+      },
+    },
+  },
 })
