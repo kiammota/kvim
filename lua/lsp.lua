@@ -1,7 +1,7 @@
 vim.diagnostic.config({
   virtual_text = {
     -- Isso garante que Warnings (Avisos), Errors (Erros) e Infos apareçam no texto da frente
-    severity = { min = vim.diagnostic.severity.WARN }, 
+    severity = { min = vim.diagnostic.severity.WARN },
     spacing = 4,
     prefix = "●",
   },
@@ -37,7 +37,7 @@ vim.keymap.set("n", "gr", function()
   })
 end, { desc = "Go to References (Quickfix)" })
 vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = "*.cs",
+
   callback = function()
     vim.lsp.buf.format({ async = false }) -- Aqui deve ser síncrono para salvar após formatar
   end,
